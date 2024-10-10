@@ -27,8 +27,8 @@ var findMaxAverage = function(nums, k) {
         
         for (let i = k; i<nums.length; i++){
             average += parseFloat(nums[i]) / parseFloat(k);
-            average = nums[i-k];
-            maxSum = Math.max(average)
+            average = nums[i-k]; // This is not moving the window look at max_sum.js to correct this
+            maxSum = Math.max(average) // what are we comparing?
         } 
         console.log(maxSum) /// 
         return maxSum;
@@ -39,3 +39,23 @@ var findMaxAverage = function(nums, k) {
     k=4
     // 12.75000
     findMaxAverage([1,12,-5,-6,50,3],4)
+
+
+    /**
+     * Solution sliding window
+     * 
+     */
+    const correctSolution = (nums,k) => {
+
+     let average = nums.slice(0,k).reduce((a,b) => a+b);
+     let maxSum = average;
+
+     for(let i=k;i<nums.length;i++){
+        average += nums[i] - nums[i-k]; // This is moving the window
+        maxSum = Math.max(average,maxSum); // This is comparing the maxSum
+     }
+     return maxSum/k;
+    }
+
+    correctSolution([1,12,-5,-6,50,3],4)
+    
